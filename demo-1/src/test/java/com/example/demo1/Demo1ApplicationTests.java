@@ -5,6 +5,8 @@ import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.Random;
+
 import java.util.Locale;
 
 @RunWith(SpringRunner.class)
@@ -23,6 +25,14 @@ public class Demo1ApplicationTests {
         System.out.println(getClass() + " fail if environment variable '" + environmentVariable + "' is set to true");
         if (Boolean.valueOf(System.getenv(environmentVariable))) {
             throw new AssertionError("Environment variable '" + environmentVariable + "' set to true");
+        }
+    }
+
+    @Test
+    public void flakyTest() {
+        Random rand = new Random();
+        if (rand.nextDouble() > 0.5) {
+            throw new AssertionError("Random failing test (flaky)");
         }
     }
 
